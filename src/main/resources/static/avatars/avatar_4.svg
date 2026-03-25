@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="50" fill="#4CAF50"/>
+  <!-- Bird body -->
+  <ellipse cx="48" cy="57" rx="17" ry="12" fill="white"/>
+  <!-- Bird head -->
+  <circle cx="68" cy="44" r="11" fill="white"/>
+  <!-- Beak -->
+  <polygon points="79,43 88,46 79,49" fill="#FFB300"/>
+  <!-- Wing -->
+  <ellipse cx="37" cy="54" rx="19" ry="8" fill="#E0E0E0" transform="rotate(-18 37 54)"/>
+  <!-- Eye -->
+  <circle cx="70" cy="42" r="2.5" fill="#333"/>
+  <circle cx="71" cy="41" r="1" fill="white"/>
+</svg>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>ホーム</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="main-body">
+<div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav>
+            <a th:href="@{/renraku}" class="sidebar-btn btn-green">新規連絡</a>
+            <a th:href="@{/authors}" class="sidebar-btn btn-blue">投稿者一覧</a>
+            <a th:href="@{/favorites}" class="sidebar-btn btn-purple">お気に入りユーザー</a>
+            <a th:href="@{/calendar}" class="sidebar-btn btn-purple">カレンダー</a>
+            <a th:href="@{/tournament}" class="sidebar-btn btn-green">大会結果はこちら</a>
+            <form th:action="@{/logout}" method="post" style="margin-top: auto;">
+                <button type="submit" class="sidebar-btn btn-red">ログアウト</button>
+            </form>
+        </nav>
+    </aside>
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="main-header">
+            <h1 class="page-title">ホーム</h1>
+            <div class="user-info" th:if="${currentUser}">
+                <img th:if="${currentUser.profileImage}" th:src="${currentUser.profileImage}" class="avatar-sm" alt="avatar"/>
+                <span th:text="${currentUser.nickname}"></span>
+            </div>
+        </div>
+        <!-- Category filter -->
+        <form th:action="@{/home}" method="get" class="filter-form">
+            <label class="radio-label">
+                <input type="radio" name="category" value="" th:checked="${selectedCategory == null || selectedCategory == ''}"/> 全て
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="category" value="PRACTICE" th:checked="${selectedCategory == 'PRACTICE'}"/> 練習
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="category" value="TOURNAMENT" th:checked="${selectedCategory == 'TOURNAMENT'}"/> 大会
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="category" value="HOLIDAY" th:checked="${selectedCategory == 'HOLIDAY'}"/> 休み
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="category" value="OTHER" th:checked="${selectedCategory == 'OTHER'}"/> 雑談
+            </label>
+            <button type="submit" class="btn btn-primary">タグで検索</button>
+        </form>
+        <!-- Post list -->
+        <div class="post-list">
+            <div th:each="post : ${posts}" class="post-card">
+                <div class="post-header">
+                    <img th:if="${post.author.profileImage}" th:src="${post.author.profileImage}" class="avatar" alt="avatar"/>
+                    <div th:unless="${post.author.profileImage}" class="avatar-placeholder"></div>
+                    <div class="post-meta">
+                        <h2 class="post-title" th:text="${post.title}"></h2>
+                        <div class="post-author">
+                            <form th:action="@{/favorites/toggle}" method="post" style="display:inline;">
+                                <input type="hidden" name="targetId" th:value="${post.author.id}"/>
+                                <input type="hidden" name="redirectTo" value="/home"/>
+                                <button type="submit" class="heart-btn">♡</button>
+                            </form>
+                            <span th:text="${post.author.nickname}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-body">
+                    <p class="post-content" th:text="${post.content}"></p>
+                    <img th:if="${post.imageUrl}" th:src="${post.imageUrl}" class="post-image" alt="post image"/>
+                </div>
+                <div class="post-footer">
+                    <span class="tag" th:text="${post.categoryLabel}"></span>
+                    <form th:action="@{/post-likes/toggle}" method="post" style="display:inline; float:right;">
+                        <input type="hidden" name="postId" th:value="${post.id}"/>
+                        <input type="hidden" name="redirectTo" value="/home"/>
+                        <button type="submit"
+                                th:class="${likedPostIds.contains(post.id)} ? 'like-btn liked' : 'like-btn'"
+                                th:text="${likedPostIds.contains(post.id)} ? '♥ いいね済み' : '♡ いいね'">
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <p th:if="${#lists.isEmpty(posts)}" class="no-data">投稿がありません。</p>
+        </div>
+    </main>
+</div>
+</body>
+</html>

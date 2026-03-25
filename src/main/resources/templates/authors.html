@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿者一覧</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="main-body">
+<div class="page-container">
+    <div class="page-header">
+        <a th:href="@{/home}" class="btn btn-secondary">ホームに戻る</a>
+        <h1 class="page-title">投稿者一覧</h1>
+    </div>
+    <div class="user-grid">
+        <div th:each="user : ${users}" class="user-card">
+            <img th:if="${user.profileImage}" th:src="${user.profileImage}" class="avatar-lg" alt="avatar"/>
+            <div th:unless="${user.profileImage}" class="avatar-placeholder-lg"></div>
+            <p class="user-name" th:text="${user.nickname}"></p>
+            <a th:href="@{/posts(userId=${user.id})}" class="btn btn-blue btn-sm">投稿を見る</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

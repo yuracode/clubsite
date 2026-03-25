@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.clubsite.mapper.TournamentMapper">
+    <resultMap id="TournamentResultMap" type="com.example.clubsite.model.Tournament">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="year" column="held_year"/>
+        <result property="month" column="held_month"/>
+        <result property="firstPlace" column="first_place"/>
+        <result property="secondPlace" column="second_place"/>
+        <result property="thirdPlace" column="third_place"/>
+        <result property="myRank" column="my_rank"/>
+        <result property="myTeamName" column="my_team_name"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <select id="findByYear" resultMap="TournamentResultMap">
+        SELECT * FROM tournaments WHERE held_year = #{year} ORDER BY held_month DESC
+    </select>
+
+    <select id="findAll" resultMap="TournamentResultMap">
+        SELECT * FROM tournaments ORDER BY held_year DESC, held_month DESC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tournaments (name, held_year, held_month, first_place, second_place, third_place, my_rank, my_team_name)
+        VALUES (#{name}, #{year}, #{month}, #{firstPlace}, #{secondPlace}, #{thirdPlace}, #{myRank}, #{myTeamName})
+    </insert>
+</mapper>

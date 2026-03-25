@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.clubsite.mapper.PostMapper">
+    <resultMap id="PostResultMap" type="com.example.clubsite.model.Post">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="category" column="category"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="authorId" column="author_id"/>
+        <association property="author" javaType="com.example.clubsite.model.User">
+            <id property="id" column="u_id"/>
+            <result property="nickname" column="u_nickname"/>
+            <result property="profileImage" column="u_profile_image"/>
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="PostResultMap">
+        SELECT p.*, u.id AS u_id, u.nickname AS u_nickname, u.profile_image AS u_profile_image
+        FROM posts p
+        JOIN users u ON p.author_id = u.id
+        <where>
+            <if test="category != null and category != ''">
+                p.category = #{category}
+            </if>
+        </where>
+        ORDER BY p.created_at DESC
+    </select>
+
+    <select id="findByAuthorId" resultMap="PostResultMap">
+        SELECT p.*, u.id AS u_id, u.nickname AS u_nickname, u.profile_image AS u_profile_image
+        FROM posts p
+        JOIN users u ON p.author_id = u.id
+        WHERE p.author_id = #{authorId}
+        ORDER BY p.created_at DESC
+    </select>
+
+    <select id="findByFavoritedUsers" resultMap="PostResultMap">
+        SELECT p.*, u.id AS u_id, u.nickname AS u_nickname, u.profile_image AS u_profile_image
+        FROM posts p
+        JOIN users u ON p.author_id = u.id
+        WHERE p.author_id IN (
+            SELECT target_id FROM favorites WHERE user_id = #{userId}
+        )
+        ORDER BY p.created_at DESC
+    </select>
+
+    <select id="findById" resultMap="PostResultMap">
+        SELECT p.*, u.id AS u_id, u.nickname AS u_nickname, u.profile_image AS u_profile_image
+        FROM posts p
+        JOIN users u ON p.author_id = u.id
+        WHERE p.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO posts (title, content, image_url, category, author_id)
+        VALUES (#{title}, #{content}, #{imageUrl}, #{category}, #{authorId})
+    </insert>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.clubsite.mapper.ScheduleMapper">
+    <resultMap id="ScheduleResultMap" type="com.example.clubsite.model.Schedule">
+        <id property="id" column="id"/>
+        <result property="date" column="date"/>
+        <result property="title" column="title"/>
+        <result property="detail" column="detail"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+
+    <select id="findByYearAndMonth" resultMap="ScheduleResultMap">
+        SELECT * FROM schedules
+        WHERE YEAR(date) = #{year} AND MONTH(date) = #{month}
+        ORDER BY date
+    </select>
+
+    <select id="findByDate" resultMap="ScheduleResultMap">
+        SELECT * FROM schedules WHERE date = #{date} ORDER BY id
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO schedules (date, title, detail, user_id)
+        VALUES (#{date}, #{title}, #{detail}, #{userId})
+    </insert>
+</mapper>

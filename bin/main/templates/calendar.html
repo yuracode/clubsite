@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>カレンダー</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="main-body">
+<div class="page-container">
+    <a th:href="@{/home}" class="btn btn-secondary">戻る</a>
+    <div class="calendar-layout">
+        <!-- Calendar -->
+        <div class="calendar-section">
+            <div class="calendar-nav">
+                <a th:href="@{/calendar(year=${prevYear}, month=${prevMonth})}" class="nav-link">&lt;前月</a>
+                <h2 th:text="${year + '年' + month + '月'}"></h2>
+                <a th:href="@{/calendar(year=${nextYear}, month=${nextMonth})}" class="nav-link">翌月&gt;</a>
+            </div>
+            <table class="calendar-table">
+                <thead>
+                <tr>
+                    <th class="sun">日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th class="sat">土</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="week : ${#numbers.sequence(0, 5)}">
+                    <td th:each="dow : ${#numbers.sequence(0, 6)}" class="calendar-cell">
+                        <div th:with="cellDate=${firstDay.plusDays(week * 7 + dow - firstDayOfWeekOffset)}">
+                            <div th:if="${cellDate.monthValue == month}">
+                                <span th:text="${cellDate.dayOfMonth}"
+                                      th:class="${cellDate.equals(today)} ? 'today-num' : 'day-num'"></span>
+                                <div th:each="s : ${scheduleMap.get(cellDate)}" class="schedule-dot" th:title="${s.title}">
+                                    <small th:text="${s.title}"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Side panel -->
+        <div class="schedule-panel">
+            <div class="schedule-section">
+                <h3>本日の予定</h3>
+                <div th:each="s : ${todaySchedules}" class="schedule-item" th:text="${s.title}"></div>
+                <p th:if="${#lists.isEmpty(todaySchedules)}" class="no-data">予定なし</p>
+            </div>
+            <div class="schedule-section">
+                <h3>本月の予定</h3>
+                <div th:each="s : ${monthSchedules}" class="schedule-item">
+                    <span th:text="${s.date + '：' + s.title}"></span>
+                </div>
+                <p th:if="${#lists.isEmpty(monthSchedules)}" class="no-data">予定なし</p>
+            </div>
+            <button onclick="document.getElementById('scheduleModal').style.display='flex'" class="btn btn-purple">予定を追加</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="scheduleModal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <h2>予定の追加</h2>
+        <form th:action="@{/schedule}" method="post">
+            <div class="form-group">
+                <label>日付:</label>
+                <input type="date" name="date" class="form-input" required/>
+            </div>
+            <div class="form-group">
+                <label>タイトル:</label>
+                <input type="text" name="title" class="form-input" required/>
+            </div>
+            <div class="form-group">
+                <label>詳細:</label>
+                <input type="text" name="detail" class="form-input"/>
+            </div>
+            <button type="submit" class="btn btn-purple">予定を保存</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

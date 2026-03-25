@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="50" fill="#E91E8C"/>
+  <!-- Upper wings -->
+  <ellipse cx="34" cy="42" rx="18" ry="13" fill="white" opacity="0.9" transform="rotate(-20 34 42)"/>
+  <ellipse cx="66" cy="42" rx="18" ry="13" fill="white" opacity="0.9" transform="rotate(20 66 42)"/>
+  <!-- Lower wings -->
+  <ellipse cx="34" cy="61" rx="13" ry="10" fill="white" opacity="0.7" transform="rotate(20 34 61)"/>
+  <ellipse cx="66" cy="61" rx="13" ry="10" fill="white" opacity="0.7" transform="rotate(-20 66 61)"/>
+  <!-- Body -->
+  <ellipse cx="50" cy="51" rx="4" ry="17" fill="#FFB7D5"/>
+  <!-- Antennae -->
+  <line x1="50" y1="34" x2="40" y2="22" stroke="#FFB7D5" stroke-width="2" stroke-linecap="round"/>
+  <line x1="50" y1="34" x2="60" y2="22" stroke="#FFB7D5" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="40" cy="22" r="2.5" fill="#FFB7D5"/>
+  <circle cx="60" cy="22" r="2.5" fill="#FFB7D5"/>
+</svg>

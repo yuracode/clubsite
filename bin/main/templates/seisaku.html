@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新規作成</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="auth-body">
+<div class="form-card">
+    <h1 class="auth-title">新規作成</h1>
+    <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+    <form th:action="@{/seisaku}" method="post">
+        <div class="form-row">
+            <div class="form-group flex-grow">
+                <label>大会名</label>
+                <input type="text" name="name" class="form-input" placeholder="大会名を入力" required/>
+            </div>
+            <div class="form-group">
+                <label>西暦</label>
+                <input type="number" name="year" class="form-input form-input-sm" placeholder="年" required/>
+            </div>
+            <div class="form-group">
+                <label>月</label>
+                <input type="number" name="month" class="form-input form-input-sm" placeholder="月" min="1" max="12" required/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>● 優勝</label>
+                <input type="text" name="firstPlace" class="form-input" placeholder="チーム名を入力" required/>
+            </div>
+            <div class="form-group">
+                <label>● 準優勝</label>
+                <input type="text" name="secondPlace" class="form-input" placeholder="チーム名を入力" required/>
+            </div>
+            <div class="form-group">
+                <label>● 三位</label>
+                <input type="text" name="thirdPlace" class="form-input" placeholder="チーム名を入力" required/>
+            </div>
+            <div class="form-group">
+                <label>● 自分たち</label>
+                <input type="number" name="myRank" class="form-input" placeholder="順位を入力"/>
+                <input type="text" name="myTeamName" class="form-input" placeholder="自分のチーム名を入力" style="margin-top:4px;"/>
+            </div>
+        </div>
+        <div class="btn-row">
+            <button type="submit" class="btn btn-green">投稿</button>
+            <a th:href="@{/home}" class="btn btn-red">ホームに戻る</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

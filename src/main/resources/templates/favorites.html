@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>お気に入りユーザー</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="main-body">
+<div class="page-container">
+    <div class="page-header">
+        <a th:href="@{/home}" class="btn-link">ホームに戻る</a>
+        <h1 class="page-title">お気に入りユーザー ❤</h1>
+    </div>
+    <div class="post-list">
+        <div th:each="post : ${posts}" class="post-card">
+            <div class="post-header">
+                <img th:if="${post.author.profileImage}" th:src="${post.author.profileImage}" class="avatar" alt="avatar"/>
+                <div th:unless="${post.author.profileImage}" class="avatar-placeholder"></div>
+                <div class="post-meta">
+                    <h2 class="post-title" th:text="${post.title}"></h2>
+                    <div class="post-author">
+                        <span class="heart-icon">❤</span>
+                        <span th:text="${post.author.nickname}"></span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag" th:text="${post.categoryLabel}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-body">
+                <p class="post-content" th:text="${post.content}"></p>
+                <img th:if="${post.imageUrl}" th:src="${post.imageUrl}" class="post-image" alt="post image"/>
+            </div>
+        </div>
+        <p th:if="${#lists.isEmpty(posts)}" class="no-data">お気に入りユーザーの投稿がありません。</p>
+    </div>
+</div>
+</body>
+</html>

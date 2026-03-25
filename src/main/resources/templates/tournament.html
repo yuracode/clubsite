@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>大会戦績</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="main-body">
+<div class="page-container">
+    <div class="page-header">
+        <a th:href="@{/home}" class="btn btn-secondary">ホームに戻る</a>
+        <a th:href="@{/seisaku}" class="btn btn-primary" style="margin-left:auto;">新規作成</a>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(thisYearTournaments)}">
+        <div th:each="t : ${thisYearTournaments}" class="tournament-card">
+            <h2 th:text="${t.name + ' ' + t.year + '年' + t.month + '月'}"></h2>
+            <table class="tournament-table">
+                <thead>
+                <tr>
+                    <th>優勝</th><th>準優勝</th><th>3位</th><th th:if="${t.myRank != null}" th:text="${t.myRank + '位'}">自分たち</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${t.firstPlace}"></td>
+                    <td th:text="${t.secondPlace}"></td>
+                    <td th:text="${t.thirdPlace}"></td>
+                    <td th:if="${t.myRank != null}" th:text="${t.myTeamName}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(lastYearTournaments)}">
+        <div th:each="t : ${lastYearTournaments}" class="tournament-card">
+            <h2 th:text="${t.name + ' ' + t.year + '年' + t.month + '月'}"></h2>
+            <table class="tournament-table">
+                <thead>
+                <tr>
+                    <th>優勝</th><th>準優勝</th><th>3位</th><th th:if="${t.myRank != null}" th:text="${t.myRank + '位'}">自分たち</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${t.firstPlace}"></td>
+                    <td th:text="${t.secondPlace}"></td>
+                    <td th:text="${t.thirdPlace}"></td>
+                    <td th:if="${t.myRank != null}" th:text="${t.myTeamName}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p th:if="${#lists.isEmpty(thisYearTournaments) and #lists.isEmpty(lastYearTournaments)}" class="no-data">大会結果がありません。</p>
+</div>
+</body>
+</html>

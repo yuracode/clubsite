@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.clubsite.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="com.example.clubsite.model.User">
+        <id property="id" column="id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="profileImage" column="profile_image"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <select id="findById" resultMap="UserResultMap">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
+
+    <select id="findByNickname" resultMap="UserResultMap">
+        SELECT * FROM users WHERE nickname = #{nickname}
+    </select>
+
+    <select id="findByEmail" resultMap="UserResultMap">
+        SELECT * FROM users WHERE email = #{email}
+    </select>
+
+    <select id="findAll" resultMap="UserResultMap">
+        SELECT * FROM users ORDER BY id
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (nickname, email, password, profile_image)
+        VALUES (#{nickname}, #{email}, #{password}, #{profileImage})
+    </insert>
+
+    <update id="update">
+        UPDATE users SET nickname=#{nickname}, email=#{email}, password=#{password},
+        profile_image=#{profileImage} WHERE id=#{id}
+    </update>
+</mapper>
