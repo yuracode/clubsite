@@ -17,6 +17,15 @@
             <div th:unless="${user.profileImage}" class="avatar-placeholder-lg"></div>
             <p class="user-name" th:text="${user.nickname}"></p>
             <a th:href="@{/posts(userId=${user.id})}" class="btn btn-blue btn-sm">投稿を見る</a>
+            <form th:if="${currentUser != null and currentUser.id != user.id}"
+                  th:action="@{/favorites/toggle}" method="post" style="display:inline;">
+                <input type="hidden" name="targetId" th:value="${user.id}"/>
+                <input type="hidden" name="redirectTo" value="/authors"/>
+                <button type="submit" class="btn btn-sm"
+                        th:classappend="${favoritedIds != null and favoritedIds.contains(user.id)} ? 'btn-red' : 'btn-secondary'">
+                    <span th:text="${favoritedIds != null and favoritedIds.contains(user.id)} ? '★ お気に入り解除' : '☆ お気に入り登録'"></span>
+                </button>
+            </form>
         </div>
     </div>
 </div>
