@@ -41,9 +41,9 @@ public class UserService {
 
         if (profileImage != null && !profileImage.isEmpty()) {
             String filename = UUID.randomUUID() + "_" + profileImage.getOriginalFilename();
-            Path uploadDir = Paths.get("src/main/resources/static/uploads");
+            Path uploadDir = Paths.get("uploads").toAbsolutePath();
             Files.createDirectories(uploadDir);
-            profileImage.transferTo(uploadDir.resolve(filename));
+            profileImage.transferTo(uploadDir.resolve(filename).toFile());
             user.setProfileImage("/uploads/" + filename);
         }
         userMapper.insert(user);

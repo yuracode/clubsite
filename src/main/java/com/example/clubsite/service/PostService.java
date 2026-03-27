@@ -39,9 +39,9 @@ public class PostService {
 
         if (image != null && !image.isEmpty()) {
             String filename = UUID.randomUUID() + "_" + image.getOriginalFilename();
-            Path uploadDir = Paths.get("src/main/resources/static/uploads");
+            Path uploadDir = Paths.get("uploads").toAbsolutePath();
             Files.createDirectories(uploadDir);
-            image.transferTo(uploadDir.resolve(filename));
+            image.transferTo(uploadDir.resolve(filename).toFile());
             post.setImageUrl("/uploads/" + filename);
         }
         postMapper.insert(post);
