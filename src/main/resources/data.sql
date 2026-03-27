@@ -1,5 +1,5 @@
 INSERT INTO users (nickname, email, password, profile_image) VALUES
-('朝日凛', 'asahi@example.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi', '/avatars/avatar_1.svg'),
+('sasaki', 'asahi@example.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi', '/avatars/avatar_1.svg'),
 ('蒼井颯', 'aoi@example.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi', '/avatars/avatar_2.svg'),
 ('東雲悠', 'shinonome@example.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi', '/avatars/avatar_3.svg'),
 ('柊翔', 'hiiragi@example.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi', '/avatars/avatar_4.svg'),
